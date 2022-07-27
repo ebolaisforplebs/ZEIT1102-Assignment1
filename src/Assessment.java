@@ -5,6 +5,11 @@
  * @author Jayath Gunawardena
  * @version 1.0
  * @since 23-07-2022
+ *
+ * The org.json.JSONArray library was sourced from https://github.com/stleary/JSON-java
+ * Installation methods can be found on the GitHub page https://github.com/stleary/JSON-java
+ * For Intellij, the IDE used after downloading the Library, the instructions found below on the jetbrains website was used
+ * https://www.jetbrains.com/help/idea/library.html
  */
 
 import org.json.JSONArray;
@@ -21,11 +26,13 @@ import java.util.Scanner;
 
 public class Assessment {
     public static void main(String[] args) throws IOException, InterruptedException {
-        
+        //Main Method, which calls the init method and starts the program
         init();
     }
 
     static void init() throws IOException, InterruptedException {
+        //Initialisation Method, Initilises the base state for the program
+        //From here it will start the actual program
 
         //Initialisation of variables and objects
         Scanner myObj  = new Scanner(System.in);
@@ -35,18 +42,19 @@ public class Assessment {
         int countryHighScore = 0;
         String[] capitalsArray = new String[250];
         String[] countryArray = new String[250];
-        System.out.print("Do you want to play the country listing game? Y/N ");
-        String response = myObj.nextLine();
 
         //Checking if the player wants to play the game and if so plays the game
+        System.out.print("Do you want to play the country listing game? Y/N ");
+        String response = myObj.nextLine();
         if (response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("Y")){
             while(repeat){
+                // Initialises variables for this while loop
                 System.out.print("Do you want to play Capitals or Country Names? ");
-
                 int score;
                 String mode = myObj.nextLine();
                 Date startDate = new Date();
                 long startTime = startDate.getTime();
+
                 //Depending on the User Input start the selected game mode.
                 if(mode.equalsIgnoreCase("capitals")){
                     mode = "Capitals";
@@ -106,7 +114,7 @@ public class Assessment {
     }
     static void quitGame(String ending, int overallHighScore, int capitalsHighScore, int countryHighScore){
         //This method runs when the user wants to quit the game.
-        // Depending on when in the process they chose to quit, they will get a different output.
+        //Depending on when in the game lifecycle they chose to quit, they will get a different output.
         System.out.println("Thank you for playing the country guessing game");
         if (!ending.equals("Start")) {
             System.out.println("Your overall high score was " + overallHighScore);
@@ -117,15 +125,17 @@ public class Assessment {
 
     static int playGame(String[] answerList)  {
         //This method runs when the user wants to play the game
-        // It takes an array of Countries or Capitals as an input.
+        //It takes an array of Countries or Capitals as an input.
 
+        //Variable Initialisations
         int lives = 3;
         int score = 0;
-
         String[] guesses = {};
 
         //Checks if the user still has lives remaining or has already guessed all the countries
         while(lives != 0 && score != 250){
+
+            //Object Initialisations
             Scanner guessObj = new Scanner(System.in);
             System.out.print("Enter your guess: ");
             String guess = guessObj.nextLine();
@@ -168,8 +178,9 @@ public class Assessment {
     static String[] apiCall(String mode) throws IOException,InterruptedException{
         //This method gets the list of Countries or Capital Names from the API
         // It will run a maximum of two time, one for each of the different modes.
-        String[] modeList = new String[250];
 
+        //Variable Initialisations
+        String[] modeList = new String[250];
         final String GUESSURI = "https://restcountries.com/v3.1/all";
 
         //The purpose of the try-catch statement is to ensure that no network related errors occur
@@ -202,7 +213,7 @@ public class Assessment {
             }
         } catch (ConnectException e){
             //If there is a networking error, the user will be told
-            // As such any networking error is appropriately handled
+            //As such any networking error is appropriately handled
             System.out.print("Sorry, please check your network connectivity and try again");
             System.exit(0);
 
